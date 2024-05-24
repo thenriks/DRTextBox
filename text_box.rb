@@ -11,7 +11,7 @@ class TextBox
 		# first shown line
 		@first_line = 0
 		# How many lines are shown
-		@view_height = 3
+		@view_height = 5
 		@x = 0
 		@y = 0
 		@size = 5
@@ -24,12 +24,18 @@ class TextBox
 	end
 
 	def scroll_up
-		@first_line -= 1
+		if @first_line > 0
+			@first_line -= 1
+		end
+
 		format_labels
 	end
 
 	def scroll_down
-		@first_line += 1
+		if @first_line < @text.length-1
+			@first_line += 1
+		end
+
 		format_labels
 	end
 
