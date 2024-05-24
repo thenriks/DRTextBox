@@ -1,2 +1,2 @@
 # TextBox
-Simple TextBox with clickable links for DragonRuby.
+Simple text box with clickable links for DragonRuby.
