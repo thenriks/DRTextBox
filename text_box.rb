@@ -6,12 +6,31 @@ class TextBox
 		@args = args
 		@line_length = 30
 		@labels = []
-		@text = []			#raw text
+		# raw text wrapped
+		@text = []
+		# first shown line
+		@first_line = 0
+		# How many lines are shown
+		@view_height = 3
 		@x = 0
 		@y = 0
 		@size = 5
 		@spacing = 28
 		@tags = []
+
+		@background_h = 200
+		@background_w = 450
+		@border = 5
+	end
+
+	def scroll_up
+		@first_line -= 1
+		format_labels
+	end
+
+	def scroll_down
+		@first_line += 1
+		format_labels
 	end
 
 	def clear
@@ -83,8 +102,12 @@ class TextBox
 
 	def format_labels()
 		@tags = []
+		@labels = []
 
-		@text.each_with_index do |l, i|
+		selection = @text[@first_line..(@first_line+@view_height-1)]
+
+		#@text.each_with_index do |l, i|
+		selection.each_with_index do |l, i|
 			elements = chop_line(l)
 			xoff = 0
 			for l in elements do
@@ -104,8 +127,6 @@ class TextBox
 	end
 
 	def add_line(l)
-		#print("add_line")
-
 		@text << l
 
 		format_labels()
@@ -176,6 +197,7 @@ class TextBox
 	end
 
 	def draw
-		return @labels
+		bg = {x: @x-@border, y: @y - @background_h + @border, w: @background_w, h: @background_h, r: 200, g: 200, b: 200}
+		return {labels: @labels, back: bg}
 	end
 end
